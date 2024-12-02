@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore del Percorso di Vita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #6c63ff;
+        }
+        #numerology-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Calcolatore del Percorso di Vita</h2>
+    <form id="numerology-form">
+        <label for="birthdate">Data di Nascita:</label>
+        <input type="date" id="birthdate" name="birthdate" required>
+
+        <button type="button" onclick="calculateLifePathNumber()">Calcola Percorso di Vita</button>
+    </form>
+
+    <div id="result" style="font-weight: bold; text-align: center; margin-top: 20px;"></div>
+
+    <script>
+        function calculateLifePathNumber() {
+            const birthdateInput = document.querySelector('#birthdate').value;
+            if (!birthdateInput) {
+                document.querySelector('#result').textContent = 'Per favore, inserisci una data valida.';
+                return;
+            }
+
+            const [year, month, day] = birthdateInput.split('-').map(Number);
+            const reduceToSingleDigit = (num) => {
+                while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                    num = num.toString().split('').reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+                }
+                return num;
+            };
+
+            const daySum = reduceToSingleDigit(day);
+            const monthSum = reduceToSingleDigit(month);
+            const yearSum = reduceToSingleDigit(year);
+            const lifePathNumber = reduceToSingleDigit(daySum + monthSum + yearSum);
+
+
+            document.querySelector('#result').textContent = `Il tuo numero del percorso di vita è: ${lifePathNumber}`;
+        }
+    </script>
+</body>
+</html>
